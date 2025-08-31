@@ -11,10 +11,15 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@reduxjs/toolkit": "^2.8.2",
+    "axios": "^1.11.0",
     "bootstrap": "^5.3.7",
     "react": "^19.1.1",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.0"
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.8.0",
+    "sweetalert2": "^11.22.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",

@@ -1,20 +1,25 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-export const LoginPage = ({ verifyAccessCode }) => {
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import { useGuestStore } from "../hook/useGuestStore";
 
+export const LoginPage = () => {
   const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (verifyAccessCode(code)) {
-      navigate("/guests");
-    } else {
-      setError("Código de acceso incorrecto");
-    }
+  const { login, status, errorMessage } = useGuestStore();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    await login({codigoAcceso: code});
   };
+
+  useEffect(() => {
+    if (errorMessage) {
+      Swal.fire("Error de autenticación", errorMessage, "error");
+    }
+  }, [errorMessage]);
+
 
   return (
     <div className="container mt-5">
@@ -23,7 +28,7 @@ export const LoginPage = ({ verifyAccessCode }) => {
           <div className="card">
             <div className="card-body">
               <h2 className="card-title text-center">Ingresar Código</h2>
-              {error && <div className="alert alert-danger">{error}</div>}
+              
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <input

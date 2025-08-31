@@ -1,0 +1,16 @@
+.guest-page-container {
+  max-width: 900px; /* Ajusta según prefieras */
+  margin: 0 auto;   /* Centra el contenido */
+}
+
+.guest-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.guest-card-wrapper {
+  flex: 0 0 48%; /* Cada card ocupa aproximadamente la mitad del contenedor */
+  max-width: 48%;
+}

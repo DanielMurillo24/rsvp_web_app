@@ -1,33 +1,29 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { LoginPage } from "../pages/loginPage";
 import { GuestsPage } from "../pages/guestsPage";
 import { SuccessPage } from "../pages/successPage";
+import { useGuestStore } from "../hook/useGuestStore";
 
 
 export const AppRouter = () => {
 
-  const [accessCode, setAccessCode] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const {status, checkAuthToken} = useGuestStore();
 
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
 
-  const verifyAccessCode = (code) => {
-
-    if (code === "1234") {
-      setAccessCode(code);
-      setIsAuthenticated(true);
-      return true;
-    }
-
-    return false;
-  };
+  if (status === "checking") {
+    return <h3>Cargando...</h3>;
+  }
 
   return (
     <Routes>
-      {!isAuthenticated ? (
+      {status === "not-authenticated" ? (
         <>
-          <Route path="/login" element={<LoginPage verifyAccessCode={verifyAccessCode} />}/>
+          <Route path="/login" element={<LoginPage/>}/>
           <Route path="/*" element={<Navigate to="/login" />} />
         </>
       ) : (
