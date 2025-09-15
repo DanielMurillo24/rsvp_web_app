@@ -29,8 +29,15 @@ export const guestSlice = createSlice({
     }, 
     clearErrorMessage: ( state ) => {
         state.errorMessage = undefined;
-    }
+    },
+    onError:(state, { payload }) => {
+        state.errorMessage = payload;
+    },
+    onUpdateGuest: (state, { payload }) => {
+      state.guest = payload;
+      state.errorMessage = undefined;
+    },
   },
 });
 
-export const {onChecking, onLogin, onLogout, clearErrorMessage} = guestSlice.actions;
+export const {onChecking, onLogin, onLogout, clearErrorMessage, onError, onUpdateGuest} = guestSlice.actions;

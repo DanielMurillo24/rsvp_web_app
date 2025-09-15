@@ -1,10 +1,12 @@
 import rsvpApi from "../api/rsvpApi";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrorMessage, onChecking, onLogin, onLogout } from "../store";
+import { clearErrorMessage, onChecking, onLogin, onLogout, onError, onUpdateGuest } from "../store";
 
 export const useGuestStore = () => {
   const { status, guest, errorMessage } = useSelector((state) => state.guest);
   const dispatch = useDispatch();
+
+//--------------------------------------------------------------------------
 
   const login = async ({ codigoAcceso }) => {
     dispatch(onChecking());
@@ -38,7 +40,7 @@ export const useGuestStore = () => {
     }
   };
 
-
+//--------------------------------------------------------------------------
     const checkAuthToken = async () => {
 
     const token = localStorage.getItem("token");
@@ -58,13 +60,40 @@ export const useGuestStore = () => {
     }
   };
 
-    return {
+//--------------------------------------------------------------------------
+
+  const updateGuest = async ({ id, invitado, acompanantes }) => {
+    try {
+      const { data } = await rsvpApi.put(`/guest/${id}`, {
+        confirmado: invitado.confirmado,
+        tipoMenu: invitado.tipoMenu,
+        condicionAlimenticia: invitado.condicionAlimenticia,
+        acompanantes,
+      });
+
+      dispatch(onUpdateGuest(data.invitado)); 
+
+    } catch (error) {
+      dispatch(onError(
+        error.response?.data?.msg || error.message || 'Error al actualizar invitado'
+      ));
+
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);  
+    }
+  };
+
+//--------------------------------------------------------------------------
+
+  return {
     status,
     guest,
     errorMessage,
 
     checkAuthToken,
-    login
+    login,
+    updateGuest
   };
 
 };

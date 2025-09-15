@@ -1,20 +1,21 @@
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { GuestCard } from "../components/guestCard";
 import { useGuestStore } from "../hook/useGuestStore";
 import logo from "../assets/logo.png";
 import "./guestsPageStyle.css";
 
 export const GuestsPage = () => {
-  const { guest, status, errorMessage } = useGuestStore();
+  const { guest, status, errorMessage, updateGuest } = useGuestStore();
   const [invitados, setInvitados] = useState([]);
+  const navigate = useNavigate();
+
+//----------------------------------------------------------------------  
 
   useEffect(() => {
     if (guest) {
-      const todos = [
-        { ...guest, tipoInvitado: "principal" },
-        ...guest.acompanantes,
-      ];
+      const todos = [{ ...guest, tipoInvitado: "principal" }, ...(guest.acompanantes || [] )];
       setInvitados(todos);
     }
   }, [guest]);
@@ -25,6 +26,7 @@ export const GuestsPage = () => {
     }
   }, [errorMessage]);
 
+  //---------------------------------------------------------------------
   const handleConfirmChange = (id, confirmado) => {
     setInvitados((prev) =>
       prev.map((inv) => (inv._id === id ? { ...inv, confirmado } : inv))
@@ -37,18 +39,42 @@ export const GuestsPage = () => {
     );
   };
 
-  const handleSave = () => {
-    // Aquí puedes agregar la lógica para guardar la información en el backend
-    Swal.fire(
-      "Guardado",
-      "La información de los invitados se ha guardado.",
-      "success"
+  const handleCondicionChange = (id, condicionAlimenticia) => {
+  setInvitados(prev =>
+    prev.map(inv => (inv._id === id ? { ...inv, condicionAlimenticia } : inv))
     );
+  };
+
+  //---------------------------------------------------------------------
+
+  const handleSave = async () => {
+    const principal = invitados.find((i) => i.tipoInvitado === "principal") || invitados[0];
+    const acompanantes = invitados.filter((i) => i._id !== principal._id)
+      .map((a) => ({
+        _id: a._id,
+        confirmado: a.confirmado,
+        tipoMenu: a.tipoMenu,
+        condicionAlimenticia: a.condicionAlimenticia,
+      }));
+
+    const invitadoPayload = {
+      confirmado: principal.confirmado,
+      tipoMenu: principal.tipoMenu,
+      condicionAlimenticia: principal.condicionAlimenticia,
+    };
+
+    await updateGuest({
+      id: principal._id,
+      invitado: invitadoPayload,
+      acompanantes,
+    });
+
+    navigate("/success");
   };
 
   return (
     <div className="container mt-5 guest-page-container">
-      {/* Card de instrucciones */}
+      {/*----------------------Card de instrucciones-----------------------*/}
       <div className="card mb-4 shadow-sm rounded-4 border-2">
         <div
           className="card-header"
@@ -73,7 +99,7 @@ export const GuestsPage = () => {
         </div>
       </div>
 
-      {/* Contenedor de GuestCards */}
+      {/*---------------------Contenedor de GuestCards-------------------------*/}
       <div className="card shadow-sm rounded-4 border-2">
         <div
           className="card-header"
@@ -93,19 +119,20 @@ export const GuestsPage = () => {
                   invitado={inv}
                   onConfirmChange={handleConfirmChange}
                   onMenuChange={handleMenuChange}
+                  onCondicionChange={handleCondicionChange}
                 />
               </div>
             ))}
           </div>
 
-          {/* Botón de guardar */}
+          {/*----------------------------Botón de guardar--------------------------*/}
           <div className="d-flex justify-content-center mb-4">
             <button
               className="btn btn-lg"
               style={{
-                backgroundColor: "#2d405c", // color personalizado
-                color: "#ffffff", // color del texto
-                border: "none", // opcional: quitar borde
+                backgroundColor: "#2d405c",
+                color: "#ffffff", 
+                border: "none", 
               }}
               onClick={handleSave}
             >

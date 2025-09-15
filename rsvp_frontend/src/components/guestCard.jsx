@@ -8,7 +8,7 @@ const opcionesCondicion = [
   "Alergia frutos secos",
 ];
 
-export const GuestCard = ({ invitado, onConfirmChange, onMenuChange }) => {
+export const GuestCard = ({ invitado, onConfirmChange, onMenuChange, onCondicionChange}) => {
   const [confirmado, setConfirmado] = useState(invitado.confirmado);
   const [tipoMenu, setTipoMenu] = useState(invitado.tipoMenu);
   const [condicion, setCondicion] = useState(invitado.condicionAlimenticia);
@@ -24,9 +24,9 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange }) => {
     onMenuChange(invitado._id, nuevoMenu);
   };
 
-  const handleCondicionChange = (e) => {
-    setCondicion(e.target.value);
-    // Podrías llamar a un onChange del padre si quieres persistir
+  const handleCondicionChange = (nuevaCondición) => {
+    setCondicion(nuevaCondición);
+    onCondicionChange(invitado._id, nuevaCondición);
   };
 
   return (
@@ -44,7 +44,7 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange }) => {
           {invitado.nombre} {invitado.apellido}
         </h6>
 
-        {/* Confirmación */}
+        {/*-----------------------------Confirmación---------------------------*/}
         <div className="form-check mb-3">
           <input
             className="form-check-input"
@@ -61,7 +61,7 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange }) => {
           </label>
         </div>
 
-        {/* Tipo de menú */}
+        {/*------------------------------Tipo de menú-------------------------*/}
         <div className="mb-3">
           <span className="me-2">Tipo de menú:</span>
           <div className="form-check form-check-inline">
@@ -88,20 +88,20 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange }) => {
               type="radio"
               name={`menu-${invitado._id}`}
               id={`menu-nino-${invitado._id}`}
-              value="Niño"
-              checked={tipoMenu === "Niño"}
-              onChange={() => handleMenuChange("Niño")}
+              value="Ninos"
+              checked={tipoMenu === "Ninos"}
+              onChange={() => handleMenuChange("Ninos")}
             />
             <label
               className="form-check-label"
               htmlFor={`menu-nino-${invitado._id}`}
             >
-              Niño
+              Niños(as)
             </label>
           </div>
         </div>
 
-        {/* Condición alimenticia */}
+        {/*----------------------------Condición alimenticia----------------------*/}
         <div className="mb-3">
           <label htmlFor={`condicion-${invitado._id}`} className="form-label">
             Condición alimenticia
@@ -111,7 +111,7 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange }) => {
             id={`condicion-${invitado._id}`}
             className="form-select"
             value={condicion}
-            onChange={handleCondicionChange}
+            onChange={(e) => handleCondicionChange(e.target.value)}
           >
             {opcionesCondicion.map((opcion) => (
               <option key={opcion} value={opcion}>
