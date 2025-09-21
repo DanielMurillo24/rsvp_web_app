@@ -17,7 +17,7 @@ export const useGuestStore = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-date", new Date().getTime());
 
-      dispatch(onLogin({ token: data.token, guest: data.invitado }));
+      dispatch(onLogin({ token: data.token, invitado: data.invitado }));
     } catch (error) {
       if (error.response) {
         // Si el backend responde con 401, es un error de autenticación real
@@ -53,7 +53,7 @@ export const useGuestStore = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("token-init-date", new Date().getTime());
 
-      dispatch(onLogin({ token: data.token, guest: data.invitado }));
+      dispatch(onLogin({ token: data.token, invitado: data.invitado }));
     } catch (error) {
       localStorage.clear();
       dispatch(onLogout());
