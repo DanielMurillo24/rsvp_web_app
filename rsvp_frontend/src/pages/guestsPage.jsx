@@ -7,18 +7,18 @@ import logo from "../assets/logo.png";
 import "./guestsPageStyle.css";
 
 export const GuestsPage = () => {
-  const { guest, status, errorMessage, updateGuest } = useGuestStore();
+  const { invitado, status, errorMessage, updateGuest } = useGuestStore();
   const [invitados, setInvitados] = useState([]);
   const navigate = useNavigate();
 
 //----------------------------------------------------------------------  
 
   useEffect(() => {
-    if (guest) {
-      const todos = [{ ...guest, tipoInvitado: "principal" }, ...(guest.acompanantes || [] )];
+    if (invitado) {
+      const todos = [{ ...invitado, tipoInvitado: "principal" }, ...(invitado.acompanantes || [] )];
       setInvitados(todos);
     }
-  }, [guest]);
+  }, [invitado]);
 
   useEffect(() => {
     if (errorMessage) {

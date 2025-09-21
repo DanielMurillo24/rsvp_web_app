@@ -5,26 +5,26 @@ export const guestSlice = createSlice({
   initialState: {
     status: 'checking',
     token: null,
-    guest: null, 
+    invitado: null, 
     errorMessage: undefined,
   },
   reducers: {
     onChecking: ( state ) => {
         state.status = 'checking';
         state.token = null;
-        state.guest = null;
+        state.invitado = null;
         state.errorMessage = undefined;
     }, 
     onLogin: (state, { payload }) => {
         state.status = 'authenticated';
         state.token = payload.token;
-        state.guest = payload.invitado;
+        state.invitado = payload.invitado;
         state.errorMessage = undefined;
     },
     onLogout: (state, { payload }) => {
         state.status = 'not-authenticated';
         state.token = null;
-        state.guest = {};
+        state.invitado = {};
         state.errorMessage = payload;
     }, 
     clearErrorMessage: ( state ) => {
@@ -34,7 +34,7 @@ export const guestSlice = createSlice({
         state.errorMessage = payload;
     },
     onUpdateGuest: (state, { payload }) => {
-      state.guest = payload;
+      state.invitado = payload;
       state.errorMessage = undefined;
     },
   },
