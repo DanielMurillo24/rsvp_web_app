@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrorMessage, onChecking, onLogin, onLogout, onError, onUpdateGuest } from "../store";
 
 export const useGuestStore = () => {
-  const { status, invitado, errorMessage } = useSelector((state) => state.invitado);
+  const { status, invitado, errorMessage } = useSelector((state) => state.guest);
   const dispatch = useDispatch();
 
 //--------------------------------------------------------------------------
