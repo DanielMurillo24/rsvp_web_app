@@ -85,6 +85,13 @@ export const useGuestStore = () => {
 
 //--------------------------------------------------------------------------
 
+const initlogout = async () => {
+    localStorage.clear();
+    dispatch(onLogout());
+};
+
+//--------------------------------------------------------------------------
+
   return {
     status,
     invitado,
@@ -92,7 +99,8 @@ export const useGuestStore = () => {
 
     checkAuthToken,
     login,
-    updateGuest
+    updateGuest,
+    initlogout
   };
 
 };

@@ -112,9 +112,9 @@ export const GuestsPage = () => {
           className="card-body "
           style={{ backgroundColor: "#f1efe8", color: "black" }}
         >
-          <div className="d-flex flex-wrap justify-content-center gap-3 mb-4 guest-cards-container">
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
             {invitados.map((inv) => (
-              <div key={inv._id} className="guest-card-wrapper">
+              <div key={inv._id} className="col">
                 <GuestCard
                   invitado={inv}
                   onConfirmChange={handleConfirmChange}
@@ -136,7 +136,7 @@ export const GuestsPage = () => {
               }}
               onClick={handleSave}
             >
-              Guardar
+              Confirmar
             </button>
           </div>
         </div>
