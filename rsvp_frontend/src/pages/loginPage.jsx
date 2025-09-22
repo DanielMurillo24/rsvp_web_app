@@ -22,10 +22,10 @@ export const LoginPage = () => {
 
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
+    <div className="d-flex justify-content-center align-items-center vh-100 px-3">
+      <div style={{ width: "100%", maxWidth: "400px" }}>
+        <div className="card shadow-sm">
+ 
             <div className="card-body">
               <h2 className="card-title text-center">Ingresar Código</h2>
               
@@ -45,7 +45,7 @@ export const LoginPage = () => {
                 </button>
               </form>
             </div>
-          </div>
+     
         </div>
       </div>
     </div>
