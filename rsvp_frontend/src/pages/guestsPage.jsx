@@ -93,8 +93,10 @@ export const GuestsPage = () => {
             style={{ width: "100px", height: "150px", marginRight: "15px" }}
           />
           <p className="mb-0">
-            Por favor confirme su asistencia y seleccione el tipo de menú
-            correspondiente para usted y sus acompañantes.
+            Por favor marque la casilla "Confirmar Asistencia" si nos acompañará a la recepción e indique
+            si presenta restricciones alimenticias, a más tardar al 31 de Enero del 2026.
+
+            De no confirmar, asumiremos que no podrá acompañarnos.
           </p>
         </div>
       </div>

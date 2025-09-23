@@ -40,9 +40,9 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange, onCondicion
       </div>
 
       <div className="card-body">
-        <h6 className="card-title">
+        <h5 className="card-title">
           {invitado.nombre} {invitado.apellido}
-        </h6>
+        </h5>
 
         {/*-----------------------------Confirmación---------------------------*/}
         <div className="form-check mb-3">
@@ -104,7 +104,7 @@ export const GuestCard = ({ invitado, onConfirmChange, onMenuChange, onCondicion
         {/*----------------------------Condición alimenticia----------------------*/}
         <div className="mb-3">
           <label htmlFor={`condicion-${invitado._id}`} className="form-label">
-            Condición alimenticia
+            Restricción alimenticia
           </label>
 
           <select
