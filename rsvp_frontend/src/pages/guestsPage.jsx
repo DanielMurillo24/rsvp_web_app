@@ -94,8 +94,8 @@ export const GuestsPage = () => {
           />
           <p className="mb-0">
             Por favor marque la casilla "Confirmar Asistencia" si nos acompañará a la recepción e indique
-            si presenta restricciones alimenticias, a más tardar al 31 de Enero del 2026.
-
+            si presenta restricciones alimenticias, a más tardar el <strong>31 de enero del 2026</strong>.
+            
             De no confirmar, asumiremos que no podrá acompañarnos.
           </p>
         </div>
